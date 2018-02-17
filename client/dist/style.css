@@ -1,0 +1,24 @@
+.repos {
+  border: solid;
+  border-width: 1px;
+  border-color: #eee;
+  border-radius: 5px;
+  width: 500px;
+  padding: 5px;
+}
+
+.repoNames {
+  font-size: 19px;
+}
+
+.users, .forks {
+  font-size: 12px;
+}
+
+.forks {
+
+}
+
+#app {
+  margin: 10px;
+}

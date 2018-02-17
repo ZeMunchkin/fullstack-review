@@ -16,11 +16,9 @@ class App extends React.Component {
 
   componentDidMount () {
     this.getRepos();
-    console.log(this.state.repos)
   }
 
   search (term) {
-    console.log(`${term} was searched`);
     const app = this;
 
     $.post({
@@ -32,8 +30,6 @@ class App extends React.Component {
         'user': term,
       }),
       success: data => {
-        console.log('post success!');
-        console.log(data.length)
         app.getRepos();
       }, 
       error: data => {
@@ -52,8 +48,6 @@ class App extends React.Component {
         'content-type': 'application/json'
       },
       success: data => {
-        console.log('get success!');
-        console.log(typeof JSON.parse(data));
         app.setState({repos : JSON.parse(data)});
       },
       error: data => {

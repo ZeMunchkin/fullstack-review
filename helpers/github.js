@@ -1,6 +1,6 @@
 const request = require('request');
-// const config = require('../config.js');
 const db = require('../database/index.js');
+require('dotenv').config();
 
 
 let getReposByUsername = (user, callback) => {
@@ -16,12 +16,10 @@ let getReposByUsername = (user, callback) => {
   };
 
   request(options, (err, response, body) => {
-
     if (err) {
-      callback(err)
+      callback(err);
     } else {
       db.save(JSON.parse(body), callback);
-    
     }
   });
 }
