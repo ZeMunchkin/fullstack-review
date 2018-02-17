@@ -22,7 +22,7 @@ class App extends React.Component {
     const app = this;
 
     $.post({
-      url: 'http://localhost:1128/repos',
+      url: 'https://hrsf91-github-repos.herokuapp.com/repos',
       headers: {
         'content-type': 'application/json'
       },
@@ -43,7 +43,7 @@ class App extends React.Component {
     const app = this;
 
     $.get({
-      url: 'http://localhost:1128/repos',
+      url: 'https://hrsf91-github-repos.herokuapp.com/repos',
       headers: {
         'content-type': 'application/json'
       },
