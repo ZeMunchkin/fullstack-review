@@ -20,16 +20,15 @@ repoSchema.plugin(uniqueValidator);
 const Repo = mongoose.model('Repo', repoSchema);
 
 
-const save = (reposArray, callback, res) => {
-  console.log('first line in save', typeof callback);
-
-  reposArray.forEach( (repoObj, index) => {
+const save = (reposArray, callback) => {
+  let counter = 0; 
+  reposArray.forEach( (repoObj) => {
     let createRepoObj = {
       repoId: repoObj.id,
       repoName: repoObj.name,
       ownerName: repoObj.owner.login,
       ownerId: repoObj.owner.id,
-      url: repoObj.url,
+      url: repoObj.html_url,
       forks: repoObj.forks,
       watchers: repoObj.watchers
     }
@@ -38,28 +37,23 @@ const save = (reposArray, callback, res) => {
     let newRepo = new Repo(createRepoObj);
 
     //call save method on new repo with callback passed in
-    newRepo.save( (err, callback) => {
-      console.log('inside newRepo.save', typeof callback);
+    newRepo.save( (err) => {
 
       err ? callback(err) : console.log('added repo successfully');
-
+      counter++;
       //when last one is successfully added, invoke callback
-      if (index === reposArray.length - 1) {
+       if (counter === reposArray.length ) {
         callback();
       }
     });
   });
 }
 
-const retrieve = () => {
-  Repo.find().limit(25).sort({watchers: -1}).exec((err, results) => {
-    err ? console.log('Nope, didnt work') : console.log('SUCCESS!!', results);
-  });
+const retrieve = (res, callback) => {
+
+  Repo.find().sort({forks: -1}).limit(25).exec(callback);
 }
 
-
-
-retrieve();
 
 module.exports.save = save;
 module.exports.retrieve = retrieve;

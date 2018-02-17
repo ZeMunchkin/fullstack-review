@@ -3,8 +3,7 @@ const config = require('../config.js');
 const db = require('../database/index.js');
 
 
-let getReposByUsername = (user, res, callback) => {
-  console.log('helpers function was invoked!');
+let getReposByUsername = (user, callback) => {
 
   let options = {
     url: `https://api.github.com/users/${user}/repos`,
@@ -16,7 +15,7 @@ let getReposByUsername = (user, res, callback) => {
     }
   };
 
-  request(options, (err, response, body, callback, res) => {
+  request(options, (err, response, body) => {
 
     if (err) {
       callback(err)
@@ -26,7 +25,5 @@ let getReposByUsername = (user, res, callback) => {
     }
   });
 }
-
-
 
 module.exports.getReposByUsername = getReposByUsername;
