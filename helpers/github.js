@@ -1,20 +1,35 @@
 const request = require('request');
 const config = require('../config.js');
+const db = require('../database/index.js');
 
-let getReposByUsername = (/* TODO */) => {
-  // TODO - Use the request module to request repos for a specific
-  // user from the github API
 
-  // The options object has been provided to help you out, 
-  // but you'll have to fill in the URL
+let getReposByUsername = (user, callback) => {
+  console.log('helpers function was invoked!');
+
   let options = {
-    url: 'FILL ME IN',
+    url: `https://api.github.com/users/${user}/repos`,
     headers: {
       'User-Agent': 'request',
-      'Authorization': `token ${config.TOKEN}`
+      'method': 'GET',
+      'Authorization': `token ${config.TOKEN}`,
+      'Accept': 'application/vnd.github.v3+json'
     }
   };
 
+  request(options, (err, response, body) => {
+
+    if (err) {
+      callback(err)
+    } else {
+      db.save(JSON.parse(body), callback);
+    
+    }
+  });
 }
+
+getReposByUsername('ZeMunchkin', err => {
+  err ? console.log('Uh-oh, didnt work') : console.log('Yup, it works');
+})
+
 
 module.exports.getReposByUsername = getReposByUsername;
