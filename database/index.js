@@ -51,7 +51,7 @@ const save = (reposArray, callback) => {
 
 const retrieve = (res, callback) => {
 
-  Repo.find().sort({forks: -1}).limit(25).exec(callback);
+  Repo.find().sort({forks: - 1}).limit(25).exec(callback);
 }
 
 
