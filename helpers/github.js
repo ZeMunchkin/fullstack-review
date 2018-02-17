@@ -1,5 +1,5 @@
 const request = require('request');
-const config = require('../config.js');
+// const config = require('../config.js');
 const db = require('../database/index.js');
 
 
