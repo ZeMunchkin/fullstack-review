@@ -1,2 +1,1 @@
-web: node server/index.js
-web: npm run react-dev
+web: node ./node_modules/.bin/webpack -p && node server/index.js
