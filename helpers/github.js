@@ -3,7 +3,7 @@ const config = require('../config.js');
 const db = require('../database/index.js');
 
 
-let getReposByUsername = (user, callback) => {
+let getReposByUsername = (user, res, callback) => {
   console.log('helpers function was invoked!');
 
   let options = {
@@ -16,7 +16,7 @@ let getReposByUsername = (user, callback) => {
     }
   };
 
-  request(options, (err, response, body) => {
+  request(options, (err, response, body, callback, res) => {
 
     if (err) {
       callback(err)
@@ -27,9 +27,6 @@ let getReposByUsername = (user, callback) => {
   });
 }
 
-getReposByUsername('ZeMunchkin', err => {
-  err ? console.log('Uh-oh, didnt work') : console.log('Yup, it works');
-})
 
 
 module.exports.getReposByUsername = getReposByUsername;

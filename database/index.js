@@ -20,7 +20,8 @@ repoSchema.plugin(uniqueValidator);
 const Repo = mongoose.model('Repo', repoSchema);
 
 
-const save = (reposArray, callback) => {
+const save = (reposArray, callback, res) => {
+  console.log('first line in save', typeof callback);
 
   reposArray.forEach( (repoObj, index) => {
     let createRepoObj = {
@@ -37,17 +38,29 @@ const save = (reposArray, callback) => {
     let newRepo = new Repo(createRepoObj);
 
     //call save method on new repo with callback passed in
-    newRepo.save( err => {
+    newRepo.save( (err, callback) => {
+      console.log('inside newRepo.save', typeof callback);
+
       err ? callback(err) : console.log('added repo successfully');
 
       //when last one is successfully added, invoke callback
       if (index === reposArray.length - 1) {
         callback();
       }
-
     });
-
   });
 }
 
+const retrieve = () => {
+  Repo.find().limit(25).sort({watchers: -1}).exec((err, results) => {
+    err ? console.log('Nope, didnt work') : console.log('SUCCESS!!', results);
+  });
+}
+
+
+
+retrieve();
+
 module.exports.save = save;
+module.exports.retrieve = retrieve;
+

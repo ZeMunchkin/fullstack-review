@@ -11,11 +11,53 @@ class App extends React.Component {
       repos: []
     }
     this.search = this.search.bind(this);
+    this.getRepos = this.getRepos.bind(this);
+  }
+
+  ComponentDidMount () {
+
   }
 
   search (term) {
     console.log(`${term} was searched`);
-    // TODO
+    const app = this;
+
+    $.post({
+      url: 'http://localhost:1128/repos',
+      headers: {
+        'content-type': 'application/json'
+      },
+      data: JSON.stringify({
+        'user': term,
+      }),
+      success: data => {
+        console.log('post success!', data);
+        app.getRepos();
+      }, 
+      error: data => {
+        console.log('post error!', data);
+      }
+    });
+
+  }
+
+  getRepos () {
+    const app = this;
+
+    $.get({
+      url: 'http://localhost:1128/repos',
+      headers: {
+        'content-type': 'application/json'
+      },
+      success: data => {
+        console.log('get success!', data);
+        app.setState({repos : data});
+      },
+      error: data => {
+        console.log('get error!', data)
+      }
+    });
+
   }
 
   render () {
